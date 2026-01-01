@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>REXOM</title>
 
-<link rel="icon" href="https://example.com/rexom.png">
-
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{
@@ -14,7 +12,6 @@ body{
   color:red;
   font-family:monospace;
   padding-top:70px;
-  overflow-x:hidden;
 }
 
 /* NAV */
@@ -25,16 +22,185 @@ nav{
   background:#050505;
   box-shadow:0 0 25px red;
   z-index:999;
-  animation:flicker 1.5s infinite;
 }
-nav ul{
-  list-style:none;
-  display:flex;
-  justify-content:center;
-}
-nav ul li a{
-  padding:15px 20px;
+
+.menu-toggle{
+  font-size:26px;
+  padding:15px;
+  cursor:pointer;
   color:red;
+}
+
+/* STATUS BAR */
+#status-bar{
+  position:absolute;
+  right:10px;
+  top:10px;
+  font-size:12px;
+  display:flex;
+  gap:10px;
+}
+
+/* MENU */
+nav ul{
+  position:absolute;
+  top:60px;
+  left:0;
+  width:100%;
+  display:none;
+  flex-direction:column;
+  background:#050505;
+}
+nav ul.show{display:flex}
+nav ul li a{
+  padding:15px;
+  text-align:center;
+  border-bottom:1px solid darkred;
+  color:red;
+  text-decoration:none;
+}
+
+/* TAB */
+.tab{
+  display:none;
+  min-height:100vh;
+  padding:30px 15px;
+}
+.tab.active{display:block}
+
+/* CARD */
+.card{
+  max-width:700px;
+  margin:30px auto;
+  padding:20px;
+  border:1px solid red;
+  box-shadow:0 0 20px red;
+  background:#080808;
+}
+
+/* SEPARATOR */
+.separator{
+  width:80%;
+  height:2px;
+  background:red;
+  margin:20px auto;
+}
+
+/* HOME */
+.logo{
+  width:260px;
+  display:block;
+  margin:0 auto;
+  box-shadow:0 0 30px red;
+}
+
+/* GALERI */
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(20px,1fr));
+  gap:15px;
+}
+.gallery img{
+  width:100%;
+  box-shadow:0 0 15px red;
+}
+
+/* EFFECT */
+@keyframes flicker{50%{opacity:.6}}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="menu-toggle" id="menuToggle">☰</div>
+
+  <div id="status-bar">
+    <span id="clock">00:00:00</span>
+    <span>● ONLINE</span>
+  </div>
+
+  <ul id="menu">
+    <li><a onclick="openTab('home')">Beranda</a></li>
+    <li><a onclick="openTab('profile')">Profile</a></li>
+    <li><a onclick="openTab('galeri')">Galeri</a></li>
+  </ul>
+</nav>
+
+<!-- BERANDA -->
+<div id="home" class="tab active">
+  <div class="card">
+    <img src="https://www.danxyofficial.zapto.org/me.gif" class="logo">
+    <h1 style="text-align:center">REXOM SYSTEM</h1>
+    <div class="separator"></div>
+    <p style="text-align:center">WELCOME TO SYSTEM</p>
+  </div>
+</div>
+
+<!-- PROFILE -->
+<div id="profile" class="tab">
+  <div class="card">
+    <h1>PROFILE</h1>
+    <div class="separator"></div>
+    <p>
+      Nama : REXOM<br>
+      Status : SISWA<br>
+      Mode : ACTIVE<br>
+      Sistem : PUBLIC
+    </p>
+  </div>
+</div>
+
+<!-- GALERI -->
+<div id="galeri" class="tab">
+  <div class="card">
+    <h1>GALERI</h1>
+    <div class="separator"></div>
+    <div class="gallery">
+      <img src="https://b.top4top.io/s_36533zagq0.png">
+      <img src="https://www.danxyofficial.zapto.org/logo/hacktivis47.png">
+      <img src="https://a.top4top.io/s_3653xct7u0.jpg">
+    </div>
+  </div>
+</div>
+
+<script>
+const menu = document.getElementById("menu");
+const toggle = document.getElementById("menuToggle");
+
+/* toggle menu */
+toggle.onclick = () => {
+  menu.classList.toggle("show");
+};
+
+/* auto close when click outside */
+document.addEventListener("click",(e)=>{
+  if(!menu.contains(e.target) && !toggle.contains(e.target)){
+    menu.classList.remove("show");
+  }
+});
+
+/* TAB */
+function openTab(id){
+  document.querySelectorAll(".tab").forEach(t=>{
+    t.classList.remove("active");
+  });
+  document.getElementById(id).classList.add("active");
+  menu.classList.remove("show");
+}
+
+/* CLOCK */
+setInterval(()=>{
+  let d=new Date();
+  clock.innerText =
+    String(d.getHours()).padStart(2,"0")+":"+
+    String(d.getMinutes()).padStart(2,"0")+":"+
+    String(d.getSeconds()).padStart(2,"0");
+},1000);
+</script>
+
+</body>
+</html>  color:red;
   text-decoration:none;
 }
 nav ul li a:hover{background:darkred}
