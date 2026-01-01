@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>REXOM</title>
+
+<link rel="icon" href="https://example.com/rexom.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:black;
+  color:red;
+  font-family:monospace;
+  padding-top:70px;
+  overflow-x:hidden;
+}
+
+/* NAV */
+nav{
+  position:fixed;top:0;width:100%;
+  background:#050505;
+  box-shadow:0 0 25px red;
+  z-index:999;
+  animation:flicker 1.5s infinite;
+}
+nav ul{list-style:none;display:flex;justify-content:center}
+nav ul li a{
+  padding:15px 20px;
+  color:red;
+  text-decoration:none;
+  display:block;
+}
+nav ul li a:hover{background:darkred}
+.menu-toggle{display:none;font-size:26px;padding:15px;cursor:pointer}
+
+@media(max-width:768px){
+  nav ul{display:none;flex-direction:column}
+  nav ul.show{display:block}
+  .menu-toggle{display:block;color:red}
+}
+
+/* SECTION */
+section{
+  min-height:100vh;
+  padding:30px 10px;
+  text-align:center;
+}
+h1{margin-bottom:15px}
+p{color:white;line-height:1.6}
+
+/* HOME */
+.logo{
+  width:300px;
+  max-width:90%;
+  cursor:pointer;
+  box-shadow:0 0 40px red;
+  animation:glitch 1.5s infinite;
+}
+#typing{
+  margin-top:20px;
+  min-height:28px;
+  letter-spacing:2px;
+  color:red;
+}
+
+/* GALERI */
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:15px;
+}
+.gallery img{
+  width:100%;
+  box-shadow:0 0 15px red;
+}
+
+/* FORM */
+input,textarea,button{
+  width:100%;
+  max-width:400px;
+  margin:10px auto;
+  padding:10px;
+  background:#111;
+  color:white;
+  border:1px solid red;
+}
+button{cursor:pointer}
+
+/* BLOOD EFFECT */
+.blood{
+  position:fixed;
+  top:-20px;
+  width:6px;
+  height:20px;
+  background:darkred;
+  opacity:.8;
+  animation:drop 5s linear infinite;
+}
+
+/* JUMPSCARE */
+#jumpscare{
+  position:fixed;
+  inset:0;
+  background:black;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+#jumpscare span{
+  color:red;
+  font-size:40px;
+  animation:glitch .1s infinite;
+}
+
+/* EFFECT */
+@keyframes flicker{50%{opacity:.6}}
+@keyframes glitch{
+  0%{transform:translate(0)}
+  20%{transform:translate(-2px,2px)}
+  40%{transform:translate(2px,-2px)}
+  60%{transform:translate(-1px,1px)}
+  80%{transform:translate(1px,-1px)}
+  100%{transform:translate(0)}
+}
+@keyframes drop{
+  0%{top:-20px}
+  100%{top:110vh}
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  <ul id="menu">
+    <li><a href="#home">Beranda</a></li>
+    <li><a href="#profile">Profile</a></li>
+    <li><a href="#galeri">Galeri</a></li>
+    <li><a href="#kontak">Kontak</a></li>
+  </ul>
+</nav>
+
+<!-- HOME -->
+<section id="home">
+  <img src="https://www.danxyofficial.zapto.org/logo/hacktivis47.png"
+       class="logo"
+       onclick="playSound()">
+  <h1>REXOM SYSTEM</h1>
+  <div id="typing"></div>
+</section>
+
+<!-- PROFILE -->
+<section id="profile">
+  <h1>PROFILE</h1>
+  <p>
+    Nama : REXOM<br>
+    Status : SISWA<br>
+    Mode : ACTIVE<br>
+    Sistem : PUBLIC<br><br>
+  </p>
+</section>
+
+<!-- GALERI -->
+<section id="galeri">
+  <h1>GALERI</h1>
+  <div class="gallery">
+    <img src="https://pregnant-apricot-5zj0ogudxb.edgeone.app/1000095331.png">
+    <img src="https://www.danxyofficial.zapto.org/logo/hacktivis47.png">
+    <img src="https://www.danxyofficial.zapto.org/logo/hacktivis47.png">
+    <img src="https://pregnant-apricot-5zj0ogudxb.edgeone.app/1000095331.png">
+  </div>
+</section>
+
+<!-- KONTAK -->
+<section id="kontak">
+  <h1>KONTAK</h1>
+  <form>
+    <input type="text" placeholder="Nama">
+    <input type="email" placeholder="Email">
+    <textarea rows="4" placeholder="Pesan"></textarea>
+    <button type="button">KIRIM</button>
+  </form>
+</section>
+
+<!-- JUMPSCARE -->
+<div id="jumpscare">
+  <span>ERROR</span>
+</div>
+
+<!-- SOUND -->
+<audio id="sound">
+  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_2e3f6a5c78.mp3">
+</audio>
+
+<script>
+/* MENU */
+function toggleMenu(){
+  document.getElementById("menu").classList.toggle("show")
+}
+
+/* SOUND */
+function playSound(){
+  document.getElementById("sound").play()
+}
+
+/* TYPING HORROR (LANJUTAN) */
+let texts=[
+  "WELCOME TO SYSTEM "
+];
+let t=0,c=0;
+function typing(){
+  if(c<texts[t].length){
+    typingBox.innerHTML+=texts[t][c];
+    c++;setTimeout(typing,120);
+  }else{
+    setTimeout(()=>{
+      typingBox.innerHTML="";
+      c=0;t=(t+1)%texts.length;
+      typing();
+    },1500);
+  }
+}
+let typingBox=document.getElementById("typing");
+typing();
+
+/* BLOOD GENERATOR */
+for(let i=0;i<25;i++){
+  let b=document.createElement("div");
+  b.className="blood";
+  b.style.left=Math.random()*100+"%";
+  b.style.animationDelay=Math.random()*5+"s";
+  document.body.appendChild(b);
+}
+
+/* JUMPSCARE RINGAN */
+setTimeout(()=>{
+  let j=document.getElementById("jumpscare");
+  j.style.display="flex";
+  setTimeout(()=>j.style.display="none",500);
+},10000);
+</script>
+
+</body>
+</html>
