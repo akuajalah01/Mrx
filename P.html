@@ -6,7 +6,6 @@
 <title>REXOM</title>
 
 <link rel="icon" href="https://example.com/rexom.png">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -37,7 +36,6 @@ nav ul li a{
   padding:15px 20px;
   color:red;
   text-decoration:none;
-  display:block;
 }
 nav ul li a:hover{background:darkred}
 .menu-toggle{
@@ -61,22 +59,15 @@ nav ul li a:hover{background:darkred}
   font-size:12px;
   display:flex;
   gap:10px;
-  align-items:center;
 }
 
 #clock{
-  letter-spacing:2px;
   animation:clockGlitch 1.2s infinite, flicker .8s infinite;
+  letter-spacing:2px;
 }
 
-#status.on{
-  color:#00ff00;
-  text-shadow:0 0 5px #00ff00;
-}
-#status.off{
-  color:red;
-  text-shadow:0 0 5px red;
-}
+#status.on{color:#00ff00;text-shadow:0 0 5px #00ff00}
+#status.off{color:red;text-shadow:0 0 5px red}
 
 /* SECTION */
 section{
@@ -94,10 +85,7 @@ p{color:white}
   box-shadow:0 0 40px red;
   animation:glitch 1.5s infinite;
 }
-#typing{
-  margin-top:20px;
-  letter-spacing:2px;
-}
+#typing{margin-top:20px;letter-spacing:2px}
 
 /* GALERI */
 .gallery{
@@ -105,10 +93,7 @@ p{color:white}
   grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
   gap:15px;
 }
-.gallery img{
-  width:100%;
-  box-shadow:0 0 15px red;
-}
+.gallery img{width:100%;box-shadow:0 0 15px red}
 
 /* FORM */
 input,textarea,button{
@@ -133,34 +118,16 @@ button{cursor:pointer}
   animation:drop 5s linear infinite;
 }
 
-/* JUMPSCARE */
-#jumpscare{
-  position:fixed;
-  inset:0;
-  background:black;
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
-}
-#jumpscare span{
-  font-size:40px;
-  animation:glitch .1s infinite;
-}
-
 /* EFFECT */
 @keyframes flicker{50%{opacity:.6}}
 @keyframes glitch{
-  20%{transform:translate(-2px,2px)}
-  40%{transform:translate(2px,-2px)}
-  60%{transform:translate(-1px,1px)}
+  20%{transform:translate(-2px,2px}
+  40%{transform:translate(2px,-2px}
 }
-@keyframes drop{
-  100%{top:110vh}
-}
+@keyframes drop{100%{top:110vh}}
 @keyframes clockGlitch{
-  20%{transform:translate(-1px,1px)}
-  40%{transform:translate(1px,-1px)}
+  20%{transform:translate(-1px,1px}
+  40%{transform:translate(1px,-1px}
 }
 </style>
 </head>
@@ -179,7 +146,6 @@ button{cursor:pointer}
     <li><a href="#home">Beranda</a></li>
     <li><a href="#profile">Profile</a></li>
     <li><a href="#galeri">Galeri</a></li>
-    <li><a href="#kontak">Kontak</a></li>
   </ul>
 </nav>
 
@@ -208,27 +174,12 @@ button{cursor:pointer}
   </div>
 </section>
 
-<section id="kontak">
-  <h1>KONTAK</h1>
-  <form>
-    <input placeholder="Nama">
-    <input type="email" placeholder="Email">
-    <textarea rows="4" placeholder="Pesan"></textarea>
-    <button type="button">KIRIM</button>
-  </form>
-</section>
-
-<div id="jumpscare"><span>ERROR</span></div>
-
 <audio id="sound">
   <source src="https://i.top4top.io/m_36536v3ed0.mp3">
 </audio>
 
 <script>
-/* MENU */
-function toggleMenu(){
-  menu.classList.toggle("show")
-}
+function toggleMenu(){menu.classList.toggle("show")}
 
 /* JAM */
 function updateClock(){
@@ -256,16 +207,6 @@ function playSound(){
   soundOn=!soundOn;
 }
 
-/* TYPING */
-let text="WELCOME TO SYSTEM ";
-let i=0;
-function typing(){
-  typingBox.innerHTML+=text[i++];
-  if(i>=text.length){typingBox.innerHTML="";i=0}
-  setTimeout(typing,120);
-}
-typing();
-
 /* BLOOD */
 for(let i=0;i<25;i++){
   let b=document.createElement("div");
@@ -275,11 +216,13 @@ for(let i=0;i<25;i++){
   document.body.appendChild(b);
 }
 
-/* JUMPSCARE */
-setTimeout(()=>{
-  jumpscare.style.display="flex";
-  setTimeout(()=>jumpscare.style.display="none",500);
-},10000);
+/* TYPING */
+let txt="WELCOME TO SYSTEM ";
+let i=0;
+setInterval(()=>{
+  typing.innerHTML+=txt[i++]||"";
+  if(i>txt.length){typing.innerHTML="";i=0}
+},120);
 </script>
 
 </body>
