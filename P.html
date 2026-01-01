@@ -20,13 +20,19 @@ body{
 
 /* NAV */
 nav{
-  position:fixed;top:0;width:100%;
+  position:fixed;
+  top:0;
+  width:100%;
   background:#050505;
   box-shadow:0 0 25px red;
   z-index:999;
   animation:flicker 1.5s infinite;
 }
-nav ul{list-style:none;display:flex;justify-content:center}
+nav ul{
+  list-style:none;
+  display:flex;
+  justify-content:center;
+}
 nav ul li a{
   padding:15px 20px;
   color:red;
@@ -34,12 +40,42 @@ nav ul li a{
   display:block;
 }
 nav ul li a:hover{background:darkred}
-.menu-toggle{display:none;font-size:26px;padding:15px;cursor:pointer}
+.menu-toggle{
+  display:none;
+  font-size:26px;
+  padding:15px;
+  cursor:pointer;
+}
 
 @media(max-width:768px){
   nav ul{display:none;flex-direction:column}
   nav ul.show{display:block}
   .menu-toggle{display:block;color:red}
+}
+
+/* STATUS BAR */
+#status-bar{
+  position:absolute;
+  right:10px;
+  top:8px;
+  font-size:12px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+#clock{
+  letter-spacing:2px;
+  animation:clockGlitch 1.2s infinite, flicker .8s infinite;
+}
+
+#status.on{
+  color:#00ff00;
+  text-shadow:0 0 5px #00ff00;
+}
+#status.off{
+  color:red;
+  text-shadow:0 0 5px red;
 }
 
 /* SECTION */
@@ -48,8 +84,7 @@ section{
   padding:30px 10px;
   text-align:center;
 }
-h1{margin-bottom:15px}
-p{color:white;line-height:1.6}
+p{color:white}
 
 /* HOME */
 .logo{
@@ -61,9 +96,7 @@ p{color:white;line-height:1.6}
 }
 #typing{
   margin-top:20px;
-  min-height:28px;
   letter-spacing:2px;
-  color:red;
 }
 
 /* GALERI */
@@ -89,7 +122,7 @@ input,textarea,button{
 }
 button{cursor:pointer}
 
-/* BLOOD EFFECT */
+/* BLOOD */
 .blood{
   position:fixed;
   top:-20px;
@@ -111,7 +144,6 @@ button{cursor:pointer}
   z-index:9999;
 }
 #jumpscare span{
-  color:red;
   font-size:40px;
   animation:glitch .1s infinite;
 }
@@ -119,25 +151,30 @@ button{cursor:pointer}
 /* EFFECT */
 @keyframes flicker{50%{opacity:.6}}
 @keyframes glitch{
-  0%{transform:translate(0)}
   20%{transform:translate(-2px,2px)}
   40%{transform:translate(2px,-2px)}
   60%{transform:translate(-1px,1px)}
-  80%{transform:translate(1px,-1px)}
-  100%{transform:translate(0)}
 }
 @keyframes drop{
-  0%{top:-20px}
   100%{top:110vh}
+}
+@keyframes clockGlitch{
+  20%{transform:translate(-1px,1px)}
+  40%{transform:translate(1px,-1px)}
 }
 </style>
 </head>
 
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+  <div id="status-bar">
+    <span id="clock">00:00:00</span>
+    <span id="status" class="on">● STATUS ON</span>
+  </div>
+
   <ul id="menu">
     <li><a href="#home">Beranda</a></li>
     <li><a href="#profile">Profile</a></li>
@@ -146,54 +183,43 @@ button{cursor:pointer}
   </ul>
 </nav>
 
-<!-- HOME -->
 <section id="home">
-  <img src="https://www.danxyofficial.zapto.org/me.gif"
-       class="logo"
-       onclick="playSound()">
+  <img src="https://www.danxyofficial.zapto.org/me.gif" class="logo" onclick="playSound()">
   <h1>REXOM SYSTEM</h1>
   <div id="typing"></div>
 </section>
 
-<!-- PROFILE -->
 <section id="profile">
   <h1>PROFILE</h1>
   <p>
     Nama : REXOM<br>
     Status : SISWA<br>
     Mode : ACTIVE<br>
-    Sistem : PUBLIC<br><br>
+    Sistem : PUBLIC
   </p>
 </section>
 
-<!-- GALERI -->
 <section id="galeri">
   <h1>GALERI</h1>
   <div class="gallery">
     <img src="https://b.top4top.io/s_36533zagq0.png">
     <img src="https://www.danxyofficial.zapto.org/logo/hacktivis47.png">
-    <img src="https://www.danxyofficial.zapto.org/logo/hacktivis47.png">
     <img src="https://a.top4top.io/s_3653xct7u0.jpg">
   </div>
 </section>
 
-<!-- KONTAK -->
 <section id="kontak">
   <h1>KONTAK</h1>
   <form>
-    <input type="text" placeholder="Nama">
+    <input placeholder="Nama">
     <input type="email" placeholder="Email">
     <textarea rows="4" placeholder="Pesan"></textarea>
     <button type="button">KIRIM</button>
   </form>
 </section>
 
-<!-- JUMPSCARE -->
-<div id="jumpscare">
-  <span>ERROR</span>
-</div>
+<div id="jumpscare"><span>ERROR</span></div>
 
-<!-- SOUND -->
 <audio id="sound">
   <source src="https://i.top4top.io/m_36536v3ed0.mp3">
 </audio>
@@ -201,35 +227,46 @@ button{cursor:pointer}
 <script>
 /* MENU */
 function toggleMenu(){
-  document.getElementById("menu").classList.toggle("show")
+  menu.classList.toggle("show")
 }
 
-/* SOUND */
+/* JAM */
+function updateClock(){
+  let n=new Date();
+  clock.innerText=
+    String(n.getHours()).padStart(2,"0")+":"+
+    String(n.getMinutes()).padStart(2,"0")+":"+
+    String(n.getSeconds()).padStart(2,"0");
+}
+setInterval(updateClock,1000);updateClock();
+
+/* SOUND + STATUS */
+let soundOn=false;
 function playSound(){
-  document.getElementById("sound").play()
+  if(!soundOn){
+    sound.play();
+    status.innerText="● SOUND ON";
+    status.className="on";
+  }else{
+    sound.pause();
+    sound.currentTime=0;
+    status.innerText="● SOUND OFF";
+    status.className="off";
+  }
+  soundOn=!soundOn;
 }
 
-/* TYPING HORROR (LANJUTAN) */
-let texts=[
-  "WELCOME TO SYSTEM "
-];
-let t=0,c=0;
+/* TYPING */
+let text="WELCOME TO SYSTEM ";
+let i=0;
 function typing(){
-  if(c<texts[t].length){
-    typingBox.innerHTML+=texts[t][c];
-    c++;setTimeout(typing,120);
-  }else{
-    setTimeout(()=>{
-      typingBox.innerHTML="";
-      c=0;t=(t+1)%texts.length;
-      typing();
-    },1500);
-  }
+  typingBox.innerHTML+=text[i++];
+  if(i>=text.length){typingBox.innerHTML="";i=0}
+  setTimeout(typing,120);
 }
-let typingBox=document.getElementById("typing");
 typing();
 
-/* BLOOD GENERATOR */
+/* BLOOD */
 for(let i=0;i<25;i++){
   let b=document.createElement("div");
   b.className="blood";
@@ -238,11 +275,10 @@ for(let i=0;i<25;i++){
   document.body.appendChild(b);
 }
 
-/* JUMPSCARE RINGAN */
+/* JUMPSCARE */
 setTimeout(()=>{
-  let j=document.getElementById("jumpscare");
-  j.style.display="flex";
-  setTimeout(()=>j.style.display="none",500);
+  jumpscare.style.display="flex";
+  setTimeout(()=>jumpscare.style.display="none",500);
 },10000);
 </script>
 
