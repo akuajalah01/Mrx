@@ -21,7 +21,7 @@ nav{
   width:100%;
   height:60px;
   background:#050505;
-  box-shadow:0 0 25px red;
+  box-shadow:0 0 15px red;
   z-index:999;
 }
 
@@ -32,17 +32,15 @@ nav{
   color:red;
 }
 
-/* STATUS BAR */
 #status-bar{
   position:absolute;
   right:10px;
   top:10px;
   font-size:12px;
   display:flex;
-  gap:20px;
+  gap:15px;
 }
 
-/* ===== MENU (TENGAH) ===== */
 nav ul{
   position:absolute;
   top:60px;
@@ -59,7 +57,7 @@ nav ul.show{display:flex}
 
 nav ul li a{
   padding:15px;
-  font-size:15px;      /* UKURAN MENU */
+  font-size:15px;
   color:red;
   text-decoration:none;
 }
@@ -72,7 +70,7 @@ nav ul li a{
 }
 .tab.active{display:block}
 
-/* ===== CARD UMUM ===== */
+/* ===== CARD ===== */
 .card{
   max-width:720px;
   margin:30px auto;
@@ -80,61 +78,80 @@ nav ul li a{
   background:#080808;
 }
 
-/* ===== BERANDA (BIRU) ===== */
+/* ===== HOME ===== */
 .home .card{
   color:#00b4ff;
   border:1px solid #00b4ff;
-  box-shadow:0 0 20px #00b4ff;
+  box-shadow:0 0 15px #00b4ff;
 }
-.home .separator,
-.home .logo{
-  box-shadow:0 0 30px #00b4ff;
-  background:#00b4ff;
-}
-
-/* ===== PROFIL (HIJAU) ===== */
-.profile .card{
-  color:#00ff99;
-  border:1px solid #00ff99;
-  box-shadow:0 0 20px #00ff99;
-}
-.profile .separator{
-  background:#00ff99;
-}
-
-/* ===== GALERI (UNGU) ===== */
-.galeri .card{
-  color:#b100ff;
-  border:1px solid #b100ff;
-  box-shadow:0 0 20px #b100ff;
-}
-.galeri .separator{
-  background:#b100ff;
-}
-
-/* ===== SEPARATOR ===== */
-.separator{
-  width:80%;
-  height:2px;
-  margin:20px auto;
-}
-
-/* ===== LOGO ===== */
 .logo{
-  width:240px;
+  width:220px;
   display:block;
   margin:0 auto 20px;
 }
 
+/* ===== PROFILE ===== */
+.profile .card{
+  color:#00ff99;
+  border:1px solid #00ff99;
+  box-shadow:0 0 15px #00ff99;
+}
+
 /* ===== GALERI ===== */
+.galeri .card{
+  color:#b100ff;
+  border:1px solid #b100ff;
+  box-shadow:0 0 15px #b100ff;
+}
+
+.separator{
+  width:80%;
+  height:2px;
+  margin:20px auto;
+  background:currentColor;
+}
+
+/* ===== GALLERY GRID ===== */
 .gallery{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
   gap:15px;
 }
+
 .gallery img{
   width:100%;
-  box-shadow:0 0 15px #b100ff;
+  height:200px;
+  object-fit:cover;
+  border-radius:10px;
+  cursor:pointer;
+  transition:0.25s;
+  box-shadow:0 0 10px rgba(177,0,255,0.4);
+}
+
+.gallery img:hover{
+  transform:scale(1.04);
+  box-shadow:0 0 18px rgba(177,0,255,0.7);
+}
+
+/* ===== FULLSCREEN VIEW ===== */
+#imgViewer{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.85);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+#imgViewer img{
+  max-width:90%;
+  max-height:90%;
+  border-radius:12px;
+  box-shadow:0 0 25px rgba(177,0,255,0.8);
 }
 </style>
 </head>
@@ -156,7 +173,7 @@ nav ul li a{
   </ul>
 </nav>
 
-<!-- BERANDA -->
+<!-- HOME -->
 <div id="home" class="tab active home">
   <div class="card">
     <img src="https://www.danxyofficial.zapto.org/me.gif" class="logo">
@@ -166,15 +183,16 @@ nav ul li a{
   </div>
 </div>
 
-<!-- PROFIL -->
+<!-- PROFILE -->
 <div id="profile" class="tab profile">
   <div class="card">
     <h1>PROFIL</h1>
     <div class="separator"></div>
     <p>
-      Nama : anugrah okto<br>
+      Nama : REXOM<br>
       Status : Siswa<br>
-      Fokus : Web Development
+      Fokus : Web Development<br>
+      Mode : ACTIVE
     </p>
   </div>
 </div>
@@ -184,30 +202,59 @@ nav ul li a{
   <div class="card">
     <h1>GALERI</h1>
     <div class="separator"></div>
+
     <div class="gallery">
-      <img src="https://b.top4top.io/s_36533zagq0.png">
-      <img src="https://www.danxyofficial.zapto.org/logo/hacktivis47.png">
-      <img src="https://a.top4top.io/s_3653xct7u0.jpg">
+      <img src="https://j.top4top.io/p_3662dma290.jpg">
+      <img src="https://a.top4top.io/p_3662k3jh60.jpg">
+      <img src="https://k.top4top.io/p_366200azj1.jpg">
+      <img src="https://l.top4top.io/p_3662eh3qk2.jpg">
     </div>
   </div>
 </div>
 
+<!-- IMAGE VIEWER -->
+<div id="imgViewer" onclick="closeImg()">
+  <img id="viewerImg">
+</div>
+
+<!-- SOUND -->
+<audio id="clickSound" src="https://c.top4top.io/m_3662yzalj0.mp3"></audio>
+
 <script>
-const menu=document.getElementById("menu");
-const toggle=document.getElementById("menuToggle");
+const menu = document.getElementById("menu");
+const toggle = document.getElementById("menuToggle");
+const viewer = document.getElementById("imgViewer");
+const viewerImg = document.getElementById("viewerImg");
+const clickSound = document.getElementById("clickSound");
 
-toggle.onclick=()=>menu.classList.toggle("show");
-
-document.addEventListener("click",e=>{
-  if(!menu.contains(e.target)&&!toggle.contains(e.target)){
-    menu.classList.remove("show");
-  }
-});
+toggle.onclick = ()=> menu.classList.toggle("show");
 
 function openTab(id){
   document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
   document.getElementById(id).classList.add("active");
   menu.classList.remove("show");
+}
+
+function playClick(){
+  clickSound.pause();
+  clickSound.currentTime = 0;
+  clickSound.play().catch(()=>{});
+}
+
+document.querySelectorAll(".gallery img").forEach(img=>{
+  img.onclick = ()=>{
+    playClick();
+    viewer.style.display="flex";
+    viewerImg.src = img.src;
+    document.body.style.overflow="hidden";
+  }
+});
+
+function closeImg(){
+  playClick();
+  viewer.style.display="none";
+  viewerImg.src="";
+  document.body.style.overflow="";
 }
 
 setInterval(()=>{
