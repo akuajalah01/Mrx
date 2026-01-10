@@ -14,24 +14,57 @@ body{
   padding-top:70px;
 }
 
-/* ===== NAV ===== */
+/* ===== NAV TRANSPARAN ===== */
 nav{
   position:fixed;
   top:0;
   width:100%;
   height:60px;
-  background:#050505;
-  box-shadow:0 0 15px red;
+  background:rgba(0,0,0,0.35);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  box-shadow:0 0 10px rgba(255,0,0,0.4);
+  border-bottom:1px solid rgba(255,0,0,0.25);
   z-index:999;
 }
 
+/* ===== MENU TOGGLE ===== */
 .menu-toggle{
+  display:none;
   font-size:26px;
   padding:15px;
   cursor:pointer;
   color:red;
 }
 
+/* ===== MENU ===== */
+nav ul{
+  position:absolute;
+  top:0;
+  left:50%;
+  transform:translateX(-50%);
+  height:60px;
+  display:flex;
+  align-items:center;
+  gap:20px;
+}
+
+nav ul li a{
+  padding:12px 22px;
+  font-size:15px;
+  color:red;
+  text-decoration:none;
+  border-radius:10px;
+  display:block;
+  transition:0.2s;
+}
+
+nav ul li a:hover,
+nav ul li a:active{
+  background:rgba(255,0,0,0.12);
+}
+
+/* STATUS BAR */
 #status-bar{
   position:absolute;
   right:10px;
@@ -39,27 +72,6 @@ nav{
   font-size:12px;
   display:flex;
   gap:15px;
-}
-
-nav ul{
-  position:absolute;
-  top:60px;
-  left:50%;
-  transform:translateX(-50%);
-  width:100%;
-  max-width:400px;
-  display:none;
-  flex-direction:column;
-  background:#050505;
-  text-align:center;
-}
-nav ul.show{display:flex}
-
-nav ul li a{
-  padding:15px;
-  font-size:15px;
-  color:red;
-  text-decoration:none;
 }
 
 /* ===== TAB ===== */
@@ -111,7 +123,7 @@ nav ul li a{
   background:currentColor;
 }
 
-/* ===== GALLERY GRID ===== */
+/* ===== GALLERY ===== */
 .gallery{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
@@ -133,7 +145,7 @@ nav ul li a{
   box-shadow:0 0 18px rgba(177,0,255,0.7);
 }
 
-/* ===== FULLSCREEN VIEW ===== */
+/* ===== FULLSCREEN ===== */
 #imgViewer{
   position:fixed;
   top:0;
@@ -153,6 +165,34 @@ nav ul li a{
   border-radius:12px;
   box-shadow:0 0 25px rgba(177,0,255,0.8);
 }
+
+/* ===== MOBILE ===== */
+@media (max-width:700px){
+  .menu-toggle{display:block;}
+
+  nav ul{
+    position:absolute;
+    top:60px;
+    left:0;
+    transform:none;
+    width:100%;
+    height:auto;
+    flex-direction:column;
+    background:rgba(0,0,0,0.55);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    display:none;
+  }
+
+  nav ul.show{display:flex;}
+
+  nav ul li a{
+    width:100%;
+    text-align:center;
+    padding:16px;
+    border-radius:0;
+  }
+}
 </style>
 </head>
 
@@ -161,25 +201,25 @@ nav ul li a{
 <nav>
   <div class="menu-toggle" id="menuToggle">☰</div>
 
-  <div id="status-bar">
-    <span id="clock">00:00:00</span>
-    <span>● ONLINE</span>
-  </div>
-
   <ul id="menu">
     <li><a onclick="openTab('home')">Beranda</a></li>
     <li><a onclick="openTab('profile')">Profil</a></li>
     <li><a onclick="openTab('galeri')">Galeri</a></li>
   </ul>
+
+  <div id="status-bar">
+    <span id="clock">00:00:00</span>
+    <span>● ONLINE</span>
+  </div>
 </nav>
 
 <!-- HOME -->
 <div id="home" class="tab active home">
   <div class="card">
     <img src="https://www.danxyofficial.zapto.org/me.gif" class="logo">
-    <h1 style="text-align:center">REXOM SYSTEM</h1>
+    <h1 style="text-align:center">ANUGRAH OKTO T</h1>
     <div class="separator"></div>
-    <p style="text-align:center">WELCOME TO SYSTEM</p>
+    <p style="text-align:center">WELCOME</p>
   </div>
 </div>
 
@@ -189,7 +229,7 @@ nav ul li a{
     <h1>PROFIL</h1>
     <div class="separator"></div>
     <p>
-      Nama : REXOM<br>
+      Nama : ANUGRAH OKTO T<br>
       Status : Siswa<br>
       Fokus : Web Development<br>
       Mode : ACTIVE
@@ -202,7 +242,6 @@ nav ul li a{
   <div class="card">
     <h1>GALERI</h1>
     <div class="separator"></div>
-
     <div class="gallery">
       <img src="https://j.top4top.io/p_3662dma290.jpg">
       <img src="https://a.top4top.io/p_3662k3jh60.jpg">
@@ -221,24 +260,28 @@ nav ul li a{
 <audio id="clickSound" src="https://c.top4top.io/m_3662yzalj0.mp3"></audio>
 
 <script>
-const menu = document.getElementById("menu");
-const toggle = document.getElementById("menuToggle");
 const viewer = document.getElementById("imgViewer");
 const viewerImg = document.getElementById("viewerImg");
 const clickSound = document.getElementById("clickSound");
-
-toggle.onclick = ()=> menu.classList.toggle("show");
-
-function openTab(id){
-  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-  menu.classList.remove("show");
-}
+const menuToggle = document.getElementById("menuToggle");
+const menu = document.getElementById("menu");
 
 function playClick(){
   clickSound.pause();
   clickSound.currentTime = 0;
   clickSound.play().catch(()=>{});
+}
+
+menuToggle.onclick = ()=>{
+  playClick();
+  menu.classList.toggle("show");
+};
+
+function openTab(id){
+  playClick();
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  menu.classList.remove("show");
 }
 
 document.querySelectorAll(".gallery img").forEach(img=>{
