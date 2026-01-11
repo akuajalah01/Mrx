@@ -14,7 +14,7 @@ body{
   padding-top:70px;
 }
 
-/* ===== NAV TRANSPARAN ===== */
+/* ===== NAV ===== */
 nav{
   position:fixed;
   top:0;
@@ -22,13 +22,11 @@ nav{
   height:60px;
   background:rgba(0,0,0,0.35);
   backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);
   box-shadow:0 0 10px rgba(255,0,0,0.4);
   border-bottom:1px solid rgba(255,0,0,0.25);
   z-index:999;
 }
 
-/* ===== MENU TOGGLE ===== */
 .menu-toggle{
   display:none;
   font-size:26px;
@@ -37,7 +35,6 @@ nav{
   color:red;
 }
 
-/* ===== MENU ===== */
 nav ul{
   position:absolute;
   top:0;
@@ -56,15 +53,12 @@ nav ul li a{
   text-decoration:none;
   border-radius:10px;
   display:block;
-  transition:0.2s;
 }
 
-nav ul li a:hover,
-nav ul li a:active{
+nav ul li a:hover{
   background:rgba(255,0,0,0.12);
 }
 
-/* STATUS BAR */
 #status-bar{
   position:absolute;
   right:10px;
@@ -75,11 +69,7 @@ nav ul li a:active{
 }
 
 /* ===== TAB ===== */
-.tab{
-  display:none;
-  min-height:100vh;
-  padding:30px 15px;
-}
+.tab{display:none;min-height:100vh;padding:30px 15px}
 .tab.active{display:block}
 
 /* ===== CARD ===== */
@@ -136,22 +126,18 @@ nav ul li a:active{
   object-fit:cover;
   border-radius:10px;
   cursor:pointer;
-  transition:0.25s;
   box-shadow:0 0 10px rgba(177,0,255,0.4);
+  transition:0.25s;
 }
 
 .gallery img:hover{
   transform:scale(1.04);
-  box-shadow:0 0 18px rgba(177,0,255,0.7);
 }
 
 /* ===== FULLSCREEN ===== */
 #imgViewer{
   position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
+  inset:0;
   background:rgba(0,0,0,0.85);
   display:none;
   justify-content:center;
@@ -168,24 +154,18 @@ nav ul li a:active{
 
 /* ===== MOBILE ===== */
 @media (max-width:700px){
-  .menu-toggle{display:block;}
-
+  .menu-toggle{display:block}
   nav ul{
     position:absolute;
     top:60px;
     left:0;
     transform:none;
     width:100%;
-    height:auto;
     flex-direction:column;
     background:rgba(0,0,0,0.55);
-    backdrop-filter:blur(8px);
-    -webkit-backdrop-filter:blur(8px);
     display:none;
   }
-
-  nav ul.show{display:flex;}
-
+  nav ul.show{display:flex}
   nav ul li a{
     width:100%;
     text-align:center;
@@ -240,23 +220,24 @@ nav ul li a:active{
 <!-- GALERI -->
 <div id="galeri" class="tab galeri">
   <div class="card">
-    <h1>GALERI</h1>
+    <h1>GALERI PEMANDANGGAN</h1>
     <div class="separator"></div>
     <div class="gallery">
       <img src="https://j.top4top.io/p_3662dma290.jpg">
       <img src="https://a.top4top.io/p_3662k3jh60.jpg">
       <img src="https://k.top4top.io/p_366200azj1.jpg">
       <img src="https://l.top4top.io/p_3662eh3qk2.jpg">
+      <img src="https://d.top4top.io/p_36630872v0.jpg">
+      <img src="https://d.top4top.io/p_3663iyqbb0.jpg">
     </div>
   </div>
 </div>
 
-<!-- IMAGE VIEWER -->
+<!-- VIEWER -->
 <div id="imgViewer" onclick="closeImg()">
   <img id="viewerImg">
 </div>
 
-<!-- SOUND -->
 <audio id="clickSound" src="https://c.top4top.io/m_3662yzalj0.mp3"></audio>
 
 <script>
@@ -265,44 +246,63 @@ const viewerImg = document.getElementById("viewerImg");
 const clickSound = document.getElementById("clickSound");
 const menuToggle = document.getElementById("menuToggle");
 const menu = document.getElementById("menu");
+const clock = document.getElementById("clock");
 
-function playClick(){
-  clickSound.pause();
-  clickSound.currentTime = 0;
-  clickSound.play().catch(()=>{});
+let soundReady = false;
+
+/* AKTIFKAN AUDIO SEKALI */
+function enableSound(){
+  if(soundReady) return;
+  clickSound.play().then(()=>{
+    clickSound.pause();
+    clickSound.currentTime = 0;
+    soundReady = true;
+  }).catch(()=>{});
 }
 
+/* SOUND */
+function playClick(){
+  if(!soundReady) return;
+  clickSound.currentTime = 0;
+  clickSound.play();
+}
+
+/* MENU */
 menuToggle.onclick = ()=>{
+  enableSound();
   playClick();
   menu.classList.toggle("show");
 };
 
+/* TAB */
 function openTab(id){
-  playClick();
+  enableSound();
   document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
   document.getElementById(id).classList.add("active");
   menu.classList.remove("show");
 }
 
+/* GALERI */
 document.querySelectorAll(".gallery img").forEach(img=>{
   img.onclick = ()=>{
-    playClick();
+    enableSound();
     viewer.style.display="flex";
     viewerImg.src = img.src;
     document.body.style.overflow="hidden";
-  }
+  };
 });
 
+/* CLOSE */
 function closeImg(){
-  playClick();
   viewer.style.display="none";
   viewerImg.src="";
   document.body.style.overflow="";
 }
 
+/* JAM */
 setInterval(()=>{
-  let d=new Date();
-  clock.innerText=
+  const d=new Date();
+  clock.innerText =
     String(d.getHours()).padStart(2,"0")+":"+
     String(d.getMinutes()).padStart(2,"0")+":"+
     String(d.getSeconds()).padStart(2,"0");
