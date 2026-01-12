@@ -20,21 +20,18 @@ nav{
   top:0;
   width:100%;
   height:60px;
-  background:rgba(0,0,0,0.35);
+  background:rgba(0,0,0,.35);
   backdrop-filter:blur(8px);
-  box-shadow:0 0 10px rgba(255,0,0,0.4);
-  border-bottom:1px solid rgba(255,0,0,0.25);
+  box-shadow:0 0 10px rgba(255,0,0,.4);
+  border-bottom:1px solid rgba(255,0,0,.25);
   z-index:999;
 }
-
 .menu-toggle{
   display:none;
   font-size:26px;
   padding:15px;
   cursor:pointer;
-  color:red;
 }
-
 nav ul{
   position:absolute;
   top:0;
@@ -45,20 +42,13 @@ nav ul{
   align-items:center;
   gap:20px;
 }
-
 nav ul li a{
   padding:12px 22px;
-  font-size:15px;
   color:red;
   text-decoration:none;
   border-radius:10px;
-  display:block;
 }
-
-nav ul li a:hover{
-  background:rgba(255,0,0,0.12);
-}
-
+nav ul li a:hover{background:rgba(255,0,0,.12)}
 #status-bar{
   position:absolute;
   right:10px;
@@ -105,73 +95,94 @@ nav ul li a:hover{
   border:1px solid #b100ff;
   box-shadow:0 0 15px #b100ff;
 }
-
 .separator{
   width:80%;
   height:2px;
   margin:20px auto;
   background:currentColor;
 }
-
-/* ===== GALLERY ===== */
 .gallery{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
   gap:15px;
 }
-
-.gallery img{
+.gallery img,
+.gallery video{
   width:100%;
   height:200px;
   object-fit:cover;
   border-radius:10px;
   cursor:pointer;
-  box-shadow:0 0 10px rgba(177,0,255,0.4);
-  transition:0.25s;
+  box-shadow:0 0 10px rgba(177,0,255,.4);
 }
 
-.gallery img:hover{
-  transform:scale(1.04);
-}
-
-/* ===== FULLSCREEN ===== */
+/* ===== IMAGE VIEWER ===== */
 #imgViewer{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.85);
+  background:rgba(0,0,0,.85);
   display:none;
   justify-content:center;
   align-items:center;
   z-index:9999;
 }
-
 #imgViewer img{
   max-width:90%;
   max-height:90%;
   border-radius:12px;
-  box-shadow:0 0 25px rgba(177,0,255,0.8);
+  box-shadow:0 0 25px rgba(177,0,255,.8);
 }
 
+/* ===== NETFLIX VIDEO ===== */
+#nfVideo{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:10000;
+  transition:background .45s ease;
+}
+#nfVideo.show{background:rgba(0,0,0,.92)}
+#nfVideo video{
+  max-width:92%;
+  max-height:92%;
+  transform:scale(.85) translateY(40px);
+  opacity:0;
+  border-radius:14px;
+  box-shadow:0 0 40px rgba(177,0,255,.8);
+  transition:.45s cubic-bezier(.25,.8,.25,1);
+}
+#nfVideo.show video{
+  transform:scale(1) translateY(0);
+  opacity:1;
+}
+.nf-close{
+  position:absolute;
+  top:18px;
+  right:25px;
+  font-size:30px;
+  cursor:pointer;
+  color:#ff00ff;
+  text-shadow:0 0 15px #ff00ff;
+  opacity:0;
+}
+#nfVideo.show .nf-close{opacity:1}
+
 /* ===== MOBILE ===== */
-@media (max-width:700px){
+@media(max-width:700px){
   .menu-toggle{display:block}
   nav ul{
-    position:absolute;
     top:60px;
     left:0;
     transform:none;
     width:100%;
     flex-direction:column;
-    background:rgba(0,0,0,0.55);
+    background:rgba(0,0,0,.55);
     display:none;
   }
   nav ul.show{display:flex}
-  nav ul li a{
-    width:100%;
-    text-align:center;
-    padding:16px;
-    border-radius:0;
-  }
 }
 </style>
 </head>
@@ -180,20 +191,17 @@ nav ul li a:hover{
 
 <nav>
   <div class="menu-toggle" id="menuToggle">☰</div>
-
   <ul id="menu">
     <li><a onclick="openTab('home')">Beranda</a></li>
     <li><a onclick="openTab('profile')">Profil</a></li>
     <li><a onclick="openTab('galeri')">Galeri</a></li>
   </ul>
-
   <div id="status-bar">
     <span id="clock">00:00:00</span>
     <span>● ONLINE</span>
   </div>
 </nav>
 
-<!-- HOME -->
 <div id="home" class="tab active home">
   <div class="card">
     <img src="https://www.danxyofficial.zapto.org/me.gif" class="logo">
@@ -203,24 +211,20 @@ nav ul li a:hover{
   </div>
 </div>
 
-<!-- PROFILE -->
 <div id="profile" class="tab profile">
   <div class="card">
     <h1>PROFIL</h1>
     <div class="separator"></div>
-    <p>
-      Nama : ANUGRAH OKTO T<br>
-      Status : Siswa<br>
-      Fokus : Web Development<br>
-      Mode : ACTIVE
-    </p>
+    Nama : ANUGRAH OKTO T<br>
+    Status : Siswa<br>
+    Fokus : Web Development<br>
+    Mode : ACTIVE
   </div>
 </div>
 
-<!-- GALERI -->
 <div id="galeri" class="tab galeri">
   <div class="card">
-    <h1>GALERI PEMANDANGGAN</h1>
+    <h1>GALERI PEMANDANGAN</h1>
     <div class="separator"></div>
     <div class="gallery">
       <img src="https://j.top4top.io/p_3662dma290.jpg">
@@ -229,84 +233,122 @@ nav ul li a:hover{
       <img src="https://l.top4top.io/p_3662eh3qk2.jpg">
       <img src="https://d.top4top.io/p_36630872v0.jpg">
       <img src="https://d.top4top.io/p_3663iyqbb0.jpg">
+      <video class="fs-video">
+        <source src="https://l.top4top.io/m_3664ex9p20.mp4" type="video/mp4">
+      </video>
     </div>
   </div>
 </div>
 
-<!-- VIEWER -->
 <div id="imgViewer" onclick="closeImg()">
   <img id="viewerImg">
 </div>
 
-<audio id="clickSound" src="https://c.top4top.io/m_3662yzalj0.mp3"></audio>
+<div id="nfVideo">
+  <div class="nf-close">✖</div>
+  <video id="nfPlayer" controls></video>
+</div>
+
+<!-- NETFLIX UI SOUNDS -->
+<audio id="sClick" src="https://b.top4top.io/m_36640d3j90.mp3"></audio>
+<audio id="sOpen" src="https://b.top4top.io/m_3664006j50.mp3"></audio>
+<audio id="sClose" src="sound/close.mp3"></audio>
 
 <script>
-const viewer = document.getElementById("imgViewer");
-const viewerImg = document.getElementById("viewerImg");
-const clickSound = document.getElementById("clickSound");
-const menuToggle = document.getElementById("menuToggle");
-const menu = document.getElementById("menu");
-const clock = document.getElementById("clock");
-
-let soundReady = false;
-
-/* AKTIFKAN AUDIO SEKALI */
-function enableSound(){
-  if(soundReady) return;
-  clickSound.play().then(()=>{
-    clickSound.pause();
-    clickSound.currentTime = 0;
-    soundReady = true;
-  }).catch(()=>{});
+/* ===== NETFLIX SOUND ===== */
+function nfSound(id,vol=0.4){
+  const s=document.getElementById(id);
+  if(!s) return;
+  s.volume=vol;
+  s.currentTime=0;
+  s.play().catch(()=>{});
 }
 
-/* SOUND */
-function playClick(){
-  if(!soundReady) return;
-  clickSound.currentTime = 0;
-  clickSound.play();
-}
-
-/* MENU */
-menuToggle.onclick = ()=>{
-  enableSound();
-  playClick();
+/* ===== BASIC ===== */
+const menuToggle=document.getElementById("menuToggle");
+const menu=document.getElementById("menu");
+menuToggle.onclick=()=>{
+  nfSound("sOpen",.35);
   menu.classList.toggle("show");
 };
-
-/* TAB */
-function openTab(id){
-  enableSound();
+function openTab (id){
+  nfSound("sOpen",.3);
   document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
   document.getElementById(id).classList.add("active");
   menu.classList.remove("show");
 }
 
-/* GALERI */
-document.querySelectorAll(".gallery img").forEach(img=>{
-  img.onclick = ()=>{
-    enableSound();
-    viewer.style.display="flex";
-    viewerImg.src = img.src;
-    document.body.style.overflow="hidden";
-  };
-});
-
-/* CLOSE */
-function closeImg(){
-  viewer.style.display="none";
-  viewerImg.src="";
-  document.body.style.overflow="";
-}
-
-/* JAM */
+/* CLOCK */
 setInterval(()=>{
   const d=new Date();
-  clock.innerText =
+  clock.innerText=
     String(d.getHours()).padStart(2,"0")+":"+
     String(d.getMinutes()).padStart(2,"0")+":"+
     String(d.getSeconds()).padStart(2,"0");
 },1000);
+
+/* IMAGE VIEWER */
+const imgViewer=document.getElementById("imgViewer");
+const viewerImg=document.getElementById("viewerImg");
+document.querySelectorAll(".gallery img").forEach(img=>{
+  img.onclick=()=>{
+    nfSound("sOpen",.3);
+    imgViewer.style.display="flex";
+    viewerImg.src=img.src;
+    document.body.style.overflow="hidden";
+  };
+});
+function closeImg(){
+  imgViewer.style.display="none";
+  viewerImg.src="";
+  document.body.style.overflow="";
+}
+
+/* NETFLIX VIDEO */
+const nfBox=document.getElementById("nfVideo");
+const nfPlayer=document.getElementById("nfPlayer");
+const nfClose=document.querySelector(".nf-close");
+let lastTap=0;
+
+function fadeAudio(target){
+  let step=target>nfPlayer.volume?0.05:-0.05;
+  const f=setInterval(()=>{
+    nfPlayer.volume=Math.max(0,Math.min(1,nfPlayer.volume+step));
+    if(nfPlayer.volume===target)clearInterval(f);
+  },30);
+}
+
+document.querySelectorAll(".fs-video").forEach(v=>{
+  v.onclick=()=>{
+    nfSound("sOpen",.45);
+    nfPlayer.src=v.querySelector("source").src;
+    nfPlayer.volume=0;
+    nfBox.style.display="flex";
+    requestAnimationFrame(()=>nfBox.classList.add("show"));
+    nfPlayer.play();
+    fadeAudio(1);
+    document.body.style.overflow="hidden";
+  };
+});
+
+function closeNF(){
+  nfSound("sOpen",.4);
+  fadeAudio(0);
+  nfBox.classList.remove("show");
+  setTimeout(()=>{
+    nfPlayer.pause();
+    nfPlayer.src="";
+    nfBox.style.display="none";
+    document.body.style.overflow="";
+  },450);
+}
+nfClose.onclick=closeNF;
+
+nfPlayer.onclick=()=>{
+  const now=Date.now();
+  if(now-lastTap<300) closeNF();
+  lastTap=now;
+};
 </script>
 
 </body>
