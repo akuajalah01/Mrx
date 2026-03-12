@@ -1,61 +1,66 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REX·IQ CHALLENGE: WhatsApp Edition</title>
+    <title>REX·IQ CHALLENGE: 50 Questions</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         body { background: #0a0c0f; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; color: #e8eef2; }
-        .test-container { max-width: 800px; width: 100%; background: #13161c; border-radius: 32px; border: 1px solid #2a2f3a; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8); overflow: hidden; }
-        .header { padding: 24px 28px; background: #1a1e26; border-bottom: 1px solid #2a2f3a; display: flex; justify-content: space-between; align-items: center; }
-        .logo h1 { font-size: 24px; font-weight: 600; }
-        .logo span { color: #25D366; font-weight: 700; background: rgba(37,211,102,0.1); padding: 4px 12px; border-radius: 40px; font-size: 14px; margin-left: 12px; }
-        .timer { background: #00000030; padding: 10px 20px; border-radius: 60px; border: 1px solid #333b48; font-weight: 600; font-size: 20px; }
-        .content { padding: 32px 28px; }
-        .progress-bar { background: #222831; height: 8px; border-radius: 20px; margin: 20px 0; overflow: hidden; }
+        .test-container { max-width: 850px; width: 100%; background: #13161c; border-radius: 32px; border: 1px solid #2a2f3a; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8); overflow: hidden; }
+        .header { padding: 20px 28px; background: #1a1e26; border-bottom: 1px solid #2a2f3a; display: flex; justify-content: space-between; align-items: center; }
+        .logo h1 { font-size: 22px; color: #e8eef2; }
+        .logo span { color: #25D366; font-weight: 700; background: rgba(37,211,102,0.1); padding: 4px 12px; border-radius: 40px; font-size: 12px; margin-left: 10px; }
+        .timer { background: #00000030; padding: 8px 16px; border-radius: 60px; border: 1px solid #333b48; color: #ff7675; font-weight: 600; font-size: 18px; }
+        .content { padding: 28px; }
+        .progress-container { margin-bottom: 20px; }
+        .progress-bar { background: #222831; height: 10px; border-radius: 20px; overflow: hidden; margin-top: 10px; }
         .progress-fill { height: 100%; width: 0%; background: #25D366; transition: width 0.3s ease; }
-        .question-box { background: #1a1e26; border-radius: 24px; padding: 28px; border: 1px solid #2e3540; margin-bottom: 20px; }
-        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
-        .option-btn { background: #222831; border: 1px solid #333b48; border-radius: 60px; padding: 14px; color: #ccd7e6; cursor: pointer; transition: 0.2s; text-align: center; }
+        .question-box { background: #1a1e26; border-radius: 24px; padding: 25px; border: 1px solid #2e3540; min-height: 200px; }
+        .question-text { font-size: 20px; margin-bottom: 20px; line-height: 1.5; }
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .option-btn { background: #222831; border: 1px solid #333b48; border-radius: 60px; padding: 14px; color: #ccd7e6; cursor: pointer; transition: 0.2s; text-align: center; font-size: 15px; }
         .option-btn.selected { background: #25D366; color: black; border-color: #25D366; font-weight: bold; }
-        .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
-        .nav-btn { background: #2c2f36; border: 1px solid #414a58; color: white; padding: 12px 24px; border-radius: 40px; cursor: pointer; }
-        .btn-wa { background: #25D366; color: black; font-weight: bold; border: none; padding: 15px; border-radius: 40px; width: 100%; cursor: pointer; margin-top: 20px; display: none; }
+        .nav-buttons { display: flex; justify-content: space-between; margin-top: 25px; gap: 15px; }
+        .nav-btn { flex: 1; background: #2c2f36; border: 1px solid #414a58; color: white; padding: 14px; border-radius: 40px; cursor: pointer; font-weight: 600; }
+        .nav-btn.primary { background: #6c5ce7; border-color: #8675f0; }
+        .btn-wa { background: #25D366; color: black; font-weight: bold; border: none; padding: 16px; border-radius: 40px; width: 100%; cursor: pointer; margin-top: 20px; display: none; font-size: 16px; }
         .history-section { margin-top: 30px; border-top: 1px solid #2a2f3a; padding-top: 20px; }
-        .history-item { background: #0f1219; padding: 10px; border-radius: 12px; margin-bottom: 8px; display: flex; justify-content: space-between; font-size: 12px; }
+        .history-item { background: #0f1219; padding: 12px; border-radius: 12px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
     </style>
 </head>
 <body>
 <div class="test-container">
     <div class="header">
-        <div class="logo"><h1>🧠 REX·IQ <span>WHATSAPP</span></h1></div>
-        <div id="timerDisplay" class="timer">25:00</div>
+        <div class="logo"><h1>🧠 REX·IQ <span>50 QUESTIONS</span></h1></div>
+        <div id="timerDisplay" class="timer">50:00</div>
     </div>
     <div class="content">
         <div id="quizArea">
-            <p>Soal <span id="currentQ">1</span>/15</p>
-            <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+            <div class="progress-container">
+                <p>Soal <span id="currentQ">1</span> dari 50</p>
+                <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+            </div>
             <div class="question-box">
-                <h2 id="questionText">Memuat soal...</h2>
+                <p class="question-text" id="questionText">Memuat soal...</p>
                 <div id="optionsContainer" class="options-grid"></div>
             </div>
             <div class="nav-buttons">
-                <button class="nav-btn" id="prevBtn" disabled>←</button>
-                <button class="nav-btn" id="nextBtn">Selanjutnya</button>
+                <button class="nav-btn" id="prevBtn" disabled>← Kembali</button>
+                <button class="nav-btn primary" id="nextBtn">Selanjutnya →</button>
             </div>
         </div>
 
         <div id="resultArea" style="display:none; text-align:center;">
-            <h2>TES SELESAI!</h2>
-            <h1 id="totalScore" style="font-size: 64px; color: #25D366; margin: 20px 0;">0</h1>
+            <h2 style="color:#6c5ce7">HASIL ANALISIS IQ</h2>
+            <h1 id="totalScore" style="font-size: 72px; color: #25D366; margin: 15px 0;">0</h1>
+            <p id="gradeText" style="margin-bottom: 20px; color:#b7c0cc;"></p>
             <button class="btn-wa" id="waBtn">📲 KIRIM HASIL KE WHATSAPP</button>
-            <button onclick="location.reload()" style="background:none; border:none; color:white; cursor:pointer; margin-top:20px;">Ulangi Tes</button>
+            <button onclick="location.reload()" style="background:none; border:none; color:#5c6a7d; cursor:pointer; margin-top:20px; text-decoration: underline;">Ulangi Tes Baru</button>
         </div>
 
         <div class="history-section">
-            <p>📜 RIWAYAT SKOR</p>
+            <p style="margin-bottom: 10px; font-weight: bold; color: #6c5ce7;">📜 RIWAYAT SKOR</p>
             <div id="historyList"></div>
         </div>
     </div>
@@ -63,40 +68,80 @@
 
 <script>
     const soalList = [
-        { q: "3 apel + 2 jeruk = 23, 2 apel + 3 jeruk = 22. Harga 1 apel?", opt: ["3", "4", "5", "6"], a: 2 }, // C (indeks 2)
-        { q: "Mana yang bukan hewan?", opt: ["Kucing", "Anjing", "Kuda", "Semangka"], a: 3 },
-        { q: "Rabu + 60 hari = ?", opt: ["Senin", "Selasa", "Rabu", "Kamis"], a: 1 },
-        { q: "Deret: 2, 6, 12, 20, ?", opt: ["28", "30", "32", "36"], a: 1 },
-        { q: "Sisi paling beda? 🔺 🔵 🔺 🔵 🔺", opt: ["A", "B", "C", "D"], a: 1 },
-        { q: "60 km/jam x 2.5 jam = ?", opt: ["120", "130", "150", "180"], a: 2 },
-        { q: "Kebalikan 'SEPATU'?", opt: ["UTAPES", "UTAEPS", "SEPUTA", "APESTU"], a: 0 },
-        { q: "1/4 + 2/3 = ?", opt: ["3/7", "11/12", "5/12", "8/15"], a: 1 },
-        { q: "Semua A=B, B=C. Maka?", opt: ["A=C", "C=A", "Bukan A", "Nol"], a: 0 },
-        { q: "Luas lingkaran r=7? (22/7)", opt: ["144", "154", "164", "174"], a: 1 },
-        { q: "Socrates pria, Pria mati. Ini?", opt: ["Deduksi", "Induksi", "Abduksi", "Mitos"], a: 0 },
+        // 1-10 (Matematika & Logika Dasar)
+        { q: "3 apel + 2 jeruk = 23, 2 apel + 3 jeruk = 22. Berapa harga 1 apel?", opt: ["3", "4", "5", "6"], a: 2 },
+        { q: "Mana yang tidak termasuk kelompoknya?", opt: ["Kucing", "Anjing", "Kuda", "Semangka"], a: 3 },
+        { q: "Jika hari ini Rabu, 60 hari lagi adalah hari?", opt: ["Sabtu", "Minggu", "Senin", "Selasa"], a: 1 },
+        { q: "Lengkapi deret: 2, 6, 12, 20, ...", opt: ["28", "30", "32", "36"], a: 1 },
+        { q: "Sisi paling berbeda? 🔺 🔵 🔺 🔵 🔺", opt: ["Segitiga", "Lingkaran", "Persegi", "Garis"], a: 1 },
+        { q: "Mobil 60 km/jam. Jarak dalam 2,5 jam?", opt: ["120 km", "130 km", "150 km", "180 km"], a: 2 },
+        { q: "Kebalikan kata 'SEPATU'?", opt: ["UTAPES", "UTAEPS", "SEPUTA", "APESTU"], a: 0 },
+        { q: "Hasil dari 1/4 + 2/3?", opt: ["3/7", "11/12", "5/12", "8/15"], a: 1 },
+        { q: "Semua A=B, B=C. Maka?", opt: ["Semua A=C", "Semua C=A", "A bukan C", "Nol"], a: 0 },
+        { q: "Luas lingkaran r=7? (π=22/7)", opt: ["144", "154", "164", "174"], a: 1 },
+        // 11-20 (Penalaran & Analogi)
+        { q: "Pria pasti mati, Socrates pria. Maka Socrates mati. Ini adalah?", opt: ["Deduksi", "Induksi", "Abduksi", "Mitos"], a: 0 },
         { q: "4 * 2 + 3 = ?", opt: ["11", "14", "20", "9"], a: 0 },
         { q: "Tangan:Jari = Kaki:?", opt: ["Lutut", "Tumit", "Jari Kaki", "Sandal"], a: 2 },
         { q: "Koin 3x, Peluang min 2 gambar?", opt: ["1/2", "1/4", "3/8", "3/4"], a: 0 },
-        { q: "Bukan bilangan prima?", opt: ["13", "17", "19", "21"], a: 3 }
+        { q: "Bukan bilangan prima?", opt: ["13", "17", "19", "21"], a: 3 },
+        { q: "Hutan:Pohon = Gurun:?", opt: ["Kaktus", "Pasir", "Unta", "Panas"], a: 1 },
+        { q: "Deret: 1, 1, 2, 3, 5, 8, ...", opt: ["10", "11", "12", "13"], a: 3 },
+        { q: "Jika 5 mesin butuh 5 menit buat 5 barang. 100 mesin buat 100 barang butuh?", opt: ["100 mnt", "50 mnt", "5 mnt", "1 mnt"], a: 2 },
+        { q: "Kakak 4 thn, adik setengah kakak. Pas kakak 100 thn, adik?", opt: ["50", "97", "98", "99"], a: 2 },
+        { q: "Sinonim 'EKSODUS'?", opt: ["Pengusiran", "Penyatuan", "Perpindahan", "Kepulangan"], a: 2 },
+        // 21-30 (Logika Visual & Deret)
+        { q: "Deret: 100, 95, 85, 70, ...", opt: ["60", "55", "50", "45"], a: 2 },
+        { q: "Mana yang paling besar?", opt: ["0.5", "0.05", "0.55", "0.49"], a: 2 },
+        { q: "Jika X > Y dan Y > Z. Maka?", opt: ["X > Z", "Z > X", "X = Z", "Tak tentu"], a: 0 },
+        { q: "Lawan kata 'KONVERGEN'?", opt: ["Menyatu", "Divergen", "Sejajar", "Fokus"], a: 1 },
+        { q: "Angka yang hilang: 3, 9, 27, ...", opt: ["54", "81", "72", "63"], a: 1 },
+        { q: "Bulan:Malam = Matahari:?", opt: ["Bintang", "Siang", "Panas", "Awan"], a: 1 },
+        { q: "25% dari 200 adalah?", opt: ["40", "50", "60", "25"], a: 1 },
+        { q: "Haus:Minum = Lapar:?", opt: ["Kenyang", "Makanan", "Makan", "Dapur"], a: 2 },
+        { q: "Ada berapa huruf 'A' di kata 'MATEMATIKA'?", opt: ["2", "3", "4", "5"], a: 1 },
+        { q: "1, 4, 9, 16, ...", opt: ["20", "24", "25", "30"], a: 2 },
+        // 31-40 (Pengetahuan & Analitis)
+        { q: "Ibukota Australia?", opt: ["Sydney", "Melbourne", "Canberra", "Perth"], a: 2 },
+        { q: "Planet terdekat dari Matahari?", opt: ["Venus", "Bumi", "Mars", "Merkurius"], a: 3 },
+        { q: "Akar kuadrat 144?", opt: ["11", "12", "13", "14"], a: 1 },
+        { q: "Penemu lampu pijar?", opt: ["Newton", "Einstein", "Tesla", "Edison"], a: 3 },
+        { q: "7 + 7 / 7 + 7 * 7 - 7 = ?", opt: ["0", "8", "50", "56"], a: 2 },
+        { q: "Suara:Telinga = Cahaya:?", opt: ["Mata", "Lampu", "Terang", "Gelap"], a: 0 },
+        { q: "Urutan: Senin, Rabu, Jumat, ...", opt: ["Sabtu", "Minggu", "Selasa", "Kamis"], a: 1 },
+        { q: "Mana yang bukan browser?", opt: ["Chrome", "Safari", "Windows", "Firefox"], a: 2 },
+        { q: "Logam cair pada suhu ruang?", opt: ["Emas", "Perak", "Raksa", "Besi"], a: 2 },
+        { q: "Negara kincir angin?", opt: ["Belanda", "Jerman", "Prancis", "Italia"], a: 0 },
+        // 41-50 (Final Challenge)
+        { q: "3, 6, 12, 24, ...", opt: ["36", "48", "50", "60"], a: 1 },
+        { q: "Berapa detik dalam 2 menit?", opt: ["60", "100", "120", "200"], a: 2 },
+        { q: "Hasil 15 * 4 / 2?", opt: ["30", "60", "15", "45"], a: 0 },
+        { q: "Presiden RI ke-3?", opt: ["Soekarno", "Habibie", "Gus Dur", "Soeharto"], a: 1 },
+        { q: "Sapi:Rumput = Harimau:?", opt: ["Hutan", "Daging", "Susu", "Singa"], a: 1 },
+        { q: "0, 1, 1, 2, 3, 5, 8, ... (Angka ke-10?)", opt: ["21", "34", "55", "13"], a: 1 },
+        { q: "Penemu gravitasi?", opt: ["Darwin", "Galileo", "Newton", "Tesla"], a: 2 },
+        { q: "Benua terkecil?", opt: ["Asia", "Eropa", "Afrika", "Australia"], a: 3 },
+        { q: "Tahun kabisat ada berapa hari?", opt: ["364", "365", "366", "367"], a: 2 },
+        { q: "Tes IQ ini soal nomor berapa?", opt: ["48", "49", "50", "51"], a: 2 }
     ];
 
-    let current = 0, answers = new Array(15).fill(null), time = 1500;
+    let current = 0, answers = new Array(50).fill(null), time = 3000; // 50 Menit
 
     function render() {
         const s = soalList[current];
         document.getElementById('questionText').innerText = s.q;
         document.getElementById('currentQ').innerText = current + 1;
-        document.getElementById('progressFill').style.width = ((current+1)/15)*100 + "%";
+        document.getElementById('progressFill').style.width = ((current+1)/50)*100 + "%";
         document.getElementById('optionsContainer').innerHTML = s.opt.map((o, i) => 
             `<div class="option-btn ${answers[current]===i?'selected':''}" onclick="setAns(${i})">${o}</div>`).join('');
         document.getElementById('prevBtn').disabled = current === 0;
-        document.getElementById('nextBtn').innerText = current === 14 ? "Selesai" : "Selanjutnya";
+        document.getElementById('nextBtn').innerText = current === 49 ? "Selesai" : "Selanjutnya →";
     }
 
     window.setAns = (i) => { answers[current] = i; render(); };
 
     document.getElementById('nextBtn').onclick = () => {
-        if(current < 14) { current++; render(); } 
+        if(current < 49) { current++; render(); } 
         else { finish(); }
     };
     document.getElementById('prevBtn').onclick = () => { current--; render(); };
@@ -104,27 +149,35 @@
     function finish() {
         let score = 0;
         answers.forEach((ans, i) => { if(ans === soalList[i].a) score++; });
-        let finalScore = Math.round((score/15)*100);
+        let finalScore = Math.round((score/50)*100);
+        
         document.getElementById('quizArea').style.display = 'none';
         document.getElementById('resultArea').style.display = 'block';
         document.getElementById('totalScore').innerText = finalScore;
         document.getElementById('waBtn').style.display = 'block';
         
-        let h = JSON.parse(localStorage.getItem('rex_wa_hist') || '[]');
-        h.unshift({s: finalScore, d: new Date().toLocaleString()});
-        localStorage.setItem('rex_wa_hist', JSON.stringify(h.slice(0,5)));
-        showHist();
+        let grade = finalScore >= 90 ? "SUPER GENIUS" : finalScore >= 75 ? "CERDAS" : "NORMAL";
+        document.getElementById('gradeText').innerText = `Kategori: ${grade} (${score} Benar)`;
+
+        saveHist(finalScore, score);
 
         document.getElementById('waBtn').onclick = () => {
-            let msg = `*REX-IQ CHALLENGE RESULTS*\n--------------------------\nSkor: ${finalScore}/100\nBenar: ${score} dari 15 soal\nWaktu: ${document.getElementById('timerDisplay').innerText}\nStatus: Selesai\n--------------------------`;
+            let msg = `*REX-IQ 50 SOAL RESULTS*\n--------------------------\nSkor: ${finalScore}/100\nBenar: ${score} dari 50 soal\nKategori: ${grade}\n--------------------------`;
             window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
         };
     }
 
+    function saveHist(s, b) {
+        let h = JSON.parse(localStorage.getItem('rex_iq_50_hist') || '[]');
+        h.unshift({s, b, d: new Date().toLocaleString()});
+        localStorage.setItem('rex_iq_50_hist', JSON.stringify(h.slice(0,5)));
+        showHist();
+    }
+
     function showHist() {
-        let h = JSON.parse(localStorage.getItem('rex_wa_hist') || '[]');
+        let h = JSON.parse(localStorage.getItem('rex_iq_50_hist') || '[]');
         document.getElementById('historyList').innerHTML = h.map(x => 
-            `<div class="history-item"><span>${x.d}</span><strong>Skor: ${x.s}</strong></div>`).join('');
+            `<div class="history-item"><span>${x.d}</span><strong>${x.s} (${x.b} Benar)</strong></div>`).join('');
     }
 
     setInterval(() => {
