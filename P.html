@@ -2,172 +2,331 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REX-EYE IQ PRO: Serious Evaluation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Presentasi IP Class - Modern Slides</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'Segoe UI', sans-serif; }
-        body { background: #05070a; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; color: #e1e1e1; }
-        .test-container { max-width: 900px; width: 100%; background: #0d1117; border-radius: 20px; border: 1px solid #30363d; box-shadow: 0 0 30px rgba(0,0,0,0.5); overflow: hidden; }
-        .header { padding: 20px; background: #161b22; border-bottom: 1px solid #30363d; display: flex; justify-content: space-between; align-items: center; }
-        .timer { color: #f85149; font-family: monospace; font-size: 24px; font-weight: bold; background: #000; padding: 5px 15px; border-radius: 5px; border: 1px solid #f85149; }
-        .content { padding: 30px; }
-        .start-screen { text-align: center; padding: 40px 0; }
-        input[type="text"] { background: #0d1117; border: 1px solid #30363d; padding: 12px; color: white; border-radius: 8px; width: 250px; margin: 20px 0; outline: none; }
-        .progress-bar { background: #21262d; height: 6px; border-radius: 10px; margin: 20px 0; overflow: hidden; }
-        .progress-fill { height: 100%; width: 0%; background: #238636; transition: 0.3s; }
-        .question-box { background: #161b22; padding: 25px; border-radius: 12px; border: 1px solid #30363d; margin-bottom: 20px; }
-        .question-text { font-size: 18px; line-height: 1.6; margin-bottom: 25px; }
-        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .option-btn { background: #21262d; border: 1px solid #30363d; border-radius: 8px; padding: 15px; color: #c9d1d9; cursor: pointer; text-align: left; transition: 0.2s; }
-        .option-btn:hover { border-color: #8b949e; }
-        .option-btn.selected { background: #1f6feb; border-color: #58a6ff; color: white; }
-        .nav-buttons { display: flex; justify-content: space-between; gap: 20px; }
-        .btn { padding: 12px 30px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; transition: 0.2s; }
-        .btn-next { background: #238636; color: white; flex: 1; }
-        .btn-prev { background: #30363d; color: white; }
-        .btn-wa { background: #25D366; color: black; width: 100%; margin-top: 20px; font-size: 16px; }
-        .history-item { background: #161b22; padding: 10px; border-radius: 8px; margin-top: 10px; display: flex; justify-content: space-between; font-size: 12px; border: 1px solid #30363d; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #f1f5f9;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Slide container */
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 2rem;
+            scroll-snap-align: start;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Card / panel */
+        .card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 2rem;
+            padding: 2rem 2.5rem;
+            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #38bdf8, #a78bfa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            border-left: 5px solid #38bdf8;
+            padding-left: 1rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin: 1.5rem 0 1rem 0;
+            color: #b9e0ff;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .card-mini {
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            border-left: 4px solid #38bdf8;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: rgba(0,0,0,0.3);
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        th {
+            background: #0f172a;
+            color: #7dd3fc;
+            font-weight: 600;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #3b82f6;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .ip-range {
+            font-family: monospace;
+            font-size: 0.9rem;
+            background: #0f172a;
+            padding: 2px 6px;
+            border-radius: 12px;
+        }
+
+        .footer-slide {
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            text-align: center;
+            opacity: 0.6;
+        }
+
+        /* navigasi dot */
+        .nav-dots {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 100;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: rgba(255,255,255,0.4);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .dot.active {
+            background: #38bdf8;
+            transform: scale(1.4);
+            box-shadow: 0 0 8px #38bdf8;
+        }
+
+        @media (max-width: 700px) {
+            .slide { padding: 2rem 1rem; }
+            h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.6rem; }
+            .card { padding: 1.5rem; }
+            .nav-dots { display: none; }
+        }
+
+        .illustration {
+            text-align: center;
+            font-size: 3rem;
+            margin: 20px 0;
+        }
+
+        button {
+            background: #3b82f6;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            color: white;
+            cursor: pointer;
+            font-weight: 500;
+            margin-top: 1rem;
+        }
     </style>
 </head>
 <body>
+    <div class="nav-dots" id="navDots"></div>
 
-<div class="test-container">
-    <div id="setupArea" class="start-screen">
-        <h1 style="color:#58a6ff">REX-EYE IQ PRO</h1>
-        <p style="margin-top:10px; color:#8b949e">Tes Evaluasi Kognitif Standar Internasional</p>
-        <input type="text" id="userName" placeholder="Masukkan Nama Anda..." autocomplete="off"><br>
-        <button class="btn btn-next" onclick="startTest()" style="max-width:250px">Mulai Evaluasi (50 Menit)</button>
-    </div>
-
-    <div id="mainArea" style="display:none">
-        <div class="header">
-            <div><span id="qIdxDisplay">1</span>/50</div>
-            <div id="timerDisplay" class="timer">50:00</div>
-        </div>
-        <div class="content">
-            <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
-            <div class="question-box">
-                <div class="question-text" id="questionText">Memuat...</div>
-                <div id="optionsContainer" class="options-grid"></div>
-            </div>
-            <div class="nav-buttons">
-                <button class="btn btn-prev" id="prevBtn" onclick="move(-1)">←</button>
-                <button class="btn btn-next" id="nextBtn" onclick="move(1)">Selanjutnya →</button>
+    <!-- SLIDE 1 - COVER -->
+    <section class="slide" id="slide1">
+        <div class="container">
+            <div class="card" style="text-align: center;">
+                <div class="illustration">🌐📡</div>
+                <h1>IP Class (A–E)</h1>
+                <p style="font-size: 1.2rem; margin-bottom: 0.5rem;">Klasifikasi Alamat IP dalam Jaringan Komputer</p>
+                <p style="margin-top: 2rem;">✨ Presentasi Modern & Mudah Dipahami</p>
+                <div class="footer-slide">⬇️ Geser ke bawah / Scroll ⬇️</div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div id="resultArea" style="display:none" class="content">
-        <h2 style="text-align:center">LAPORAN EVALUASI</h2>
-        <div style="text-align:center; margin: 30px 0;">
-            <p id="resName" style="font-size:20px; color:#8b949e"></p>
-            <h1 id="resScore" style="font-size:80px; color:#238636">0</h1>
-            <p id="resGrade" style="font-size:24px; font-weight:bold"></p>
+    <!-- SLIDE 2 - PENGERTIAN IP ADDRESS -->
+    <section class="slide" id="slide2">
+        <div class="container">
+            <div class="card">
+                <h2>📡 Apa itu IP Address?</h2>
+                <p style="font-size: 1.1rem; line-height: 1.5;">IP Address (<strong>Internet Protocol Address</strong>) adalah alamat unik yang diberikan ke setiap perangkat yang terhubung ke jaringan komputer (internet atau lokal).</p>
+                <div class="grid">
+                    <div class="card-mini">🔹 <strong>Contoh:</strong> <span class="ip-range">192.168.1.1</span></div>
+                    <div class="card-mini">🔹 <strong>Fungsi:</strong> Identifikasi perangkat & lokasi di jaringan</div>
+                    <div class="card-mini">🔹 <strong>Format:</strong> 4 angka desimal (0–255) dipisah titik</div>
+                </div>
+                <div class="illustration">🖥️ ➡️ 🌍</div>
+            </div>
         </div>
-        <button class="btn btn-wa" id="waBtn">Kirim Hasil Ke WhatsApp</button>
-        <div id="historyList" style="margin-top:30px"></div>
-    </div>
-</div>
+    </section>
 
-<script>
-    const soalList = [
-        { q: "Jika SEMUA M adalah P, dan BEBERAPA S adalah M, maka...", opt: ["Semua S adalah P", "Beberapa S adalah P", "Tidak ada S yang P", "Semua P adalah S"], a: 1 },
-        { q: "Lengkapi deret: 1, 4, 13, 40, ...", opt: ["81", "121", "100", "120"], a: 1 },
-        { q: "Analogi: AIR : MENGUAP = ES : ...", opt: ["Membeku", "Mencair", "Dingin", "Padat"], a: 1 },
-        { q: "Jika A + B = 76 dan A - B = 38. Berapa A / B?", opt: ["2", "3", "1", "4"], a: 1 },
-        { q: "Manakah yang secara logika TIDAK termasuk dalam kelompok: Oksigen, Nitrogen, Karbondioksida, Magnesium?", opt: ["Oksigen", "Nitrogen", "Karbondioksida", "Magnesium"], a: 3 },
-        { q: "Jika kode 'LOGIKA' adalah 'Mphjlb'. Maka kode untuk 'SISTEM' adalah?", opt: ["Tjtufn", "Tjtufo", "Tjtvfn", "Tjtven"], a: 0 },
-        { q: "Lampu A menyala tiap 3 detik, Lampu B tiap 4 detik. Kapan mereka menyala bersamaan kedua kalinya?", opt: ["12 detik", "24 detik", "36 detik", "48 detik"], a: 1 },
-        { q: "Jika 15 pekerja membangun jembatan dalam 20 hari. Berapa pekerja tambahan untuk selesai dalam 12 hari?", opt: ["10", "15", "25", "20"], a: 0 },
-        { q: "Sinonim dari kata 'ABERASI' adalah...", opt: ["Penyimpangan", "Penyatuan", "Perbaikan", "Penyesuaian"], a: 0 },
-        { q: "Jika X adalah bilangan genap dan Y bilangan ganjil, manakah yang PASTI ganjil?", opt: ["X * Y", "X + Y", "X / Y", "X^Y"], a: 1 },
-        // ... (Soal akan gue singkat tapi berbobot untuk mengisi total 50)
-    ];
+    <!-- SLIDE 3 - MENGAPA ADA KELAS IP? + TABEL RINGKAS -->
+    <section class="slide" id="slide3">
+        <div class="container">
+            <div class="card">
+                <h2>📊 Mengapa Ada Kelas IP?</h2>
+                <p>Agar alamat IP tidak boros dan mudah dikelola. Dibagi menjadi <strong>5 kelas: A, B, C, D, E</strong> berdasarkan bit awal.</p>
+                
+                <h3>📋 Tabel Ringkasan IP Class</h3>
+                <table>
+                    <thead>
+                        <tr><th>Kelas</th><th>Bit Awal</th><th>Range IP Pertama</th><th>Default Mask</th><th>Penggunaan</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><span class="badge">A</span></td><td>0</td><td>1.0.0.0 – 126.0.0.0</td><td>255.0.0.0</td><td>Jaringan raksasa (negara, perusahaan besar)</td></tr>
+                        <tr><td><span class="badge">B</span></td><td>10</td><td>128.0.0.0 – 191.255.0.0</td><td>255.255.0.0</td><td>Jaringan menengah (kampus, RS)</td></tr>
+                        <tr><td><span class="badge">C</span></td><td>110</td><td>192.0.0.0 – 223.255.255.0</td><td>255.255.255.0</td><td>Jaringan kecil (kantor, warnet)</td></tr>
+                        <tr><td><span class="badge">D</span></td><td>1110</td><td>224.0.0.0 – 239.255.255.255</td><td>-</td><td>Multicast (streaming, one-to-many)</td></tr>
+                        <tr><td><span class="badge">E</span></td><td>1111</td><td>240.0.0.0 – 255.255.255.255</td><td>-</td><td>Riset & eksperimen (tidak untuk umum)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
 
-    // Auto-generate sisa soal sampai 50 dengan pola logika berat
-    for(let i=11; i<=50; i++) {
-        soalList.push({
-            q: `Evaluasi Logika Ke-${i}: Jika pola X adalah ${i*2}, dan Y adalah ${i+5}, tentukan nilai logis dari (X-Y) jika i=${i}.`,
-            opt: [ `${i*2-5}`, `${i-5}`, `${i+5}`, `${i-1}` ],
-            a: 1
-        });
-    }
+    <!-- SLIDE 4 - PENJELASAN TIAP KELAS + CONTOH -->
+    <section class="slide" id="slide4">
+        <div class="container">
+            <div class="card">
+                <h2>🧩 Penjelasan Tiap Kelas + Contoh</h2>
+                <div class="grid">
+                    <div class="card-mini"><strong>🇦 Kelas A</strong><br>Network ID panjang, Host ID besar.<br>📌 Contoh: <span class="ip-range">8.8.8.8</span> (Google DNS)</div>
+                    <div class="card-mini"><strong>🇧 Kelas B</strong><br>Seimbang untuk menengah.<br>📌 Contoh: <span class="ip-range">172.16.0.1</span> (jaringan kampus)</div>
+                    <div class="card-mini"><strong>🇨 Kelas C</strong><br>Banyak network, sedikit host.<br>📌 Contoh: <span class="ip-range">192.168.1.1</span> (router rumahan)</div>
+                    <div class="card-mini"><strong>🇩 Kelas D</strong><br>Multicast (satu ke banyak).<br>📌 Contoh: <span class="ip-range">224.0.0.1</span> (semua host subnet)</div>
+                    <div class="card-mini"><strong>🇪 Kelas E</strong><br>Untuk riset, tidak dipakai publik.<br>📌 Contoh: <span class="ip-range">240.0.0.0</span> eksperimental</div>
+                </div>
+                <div class="illustration">🏢🏥🏠 🎥 🔬</div>
+            </div>
+        </div>
+    </section>
 
-    let userAnswers = new Array(50).fill(null);
-    let current = 0;
-    let timer = 3000;
-    let name = "";
+    <!-- SLIDE 5 - KESIMPULAN & PERKEMBANGAN MODERN -->
+    <section class="slide" id="slide5">
+        <div class="container">
+            <div class="card">
+                <h2>✅ Kesimpulan</h2>
+                <ul style="margin-left: 1.5rem; line-height: 1.8;">
+                    <li>IP Address adalah <strong>identitas unik</strong> perangkat di jaringan.</li>
+                    <li>IP Class A, B, C dipakai sehari-hari (komersial).</li>
+                    <li>Kelas D untuk <strong>multicast</strong>, Kelas E untuk <strong>eksperimen</strong>.</li>
+                    <li>Saat ini sudah berkembang <strong>Classless (CIDR)</strong> → lebih fleksibel tanpa terikat kelas A/B/C.</li>
+                    <li>Namun memahami IP Class penting untuk memahami sejarah & dasar jaringan.</li>
+                </ul>
+                <div class="illustration">📡 → ⚡ CIDR → 🌍 Internet Modern</div>
+                <div class="footer-slide">✨ Terima kasih — Jaringan Lebih Dipahami ✨</div>
+            </div>
+        </div>
+    </section>
 
-    function startTest() {
-        name = document.getElementById('userName').value;
-        if(!name) return alert("Masukkan Nama!");
-        document.getElementById('setupArea').style.display = 'none';
-        document.getElementById('mainArea').style.display = 'block';
-        render();
-        startTimer();
-    }
+    <!-- SLIDE BONUS : ILUSTRASI VISUAL (Opsional tapi bagus) -->
+    <section class="slide" id="slide6">
+        <div class="container">
+            <div class="card" style="text-align: center;">
+                <h2>🎯 Ringkasan Cepat</h2>
+                <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin: 30px 0;">
+                    <div><span class="badge" style="background:#f97316;">A</span> 1–126</div>
+                    <div><span class="badge" style="background:#10b981;">B</span> 128–191</div>
+                    <div><span class="badge" style="background:#3b82f6;">C</span> 192–223</div>
+                    <div><span class="badge" style="background:#a855f7;">D</span> 224–239</div>
+                    <div><span class="badge" style="background:#64748b;">E</span> 240–255</div>
+                </div>
+                <p><strong>💡 Catatan:</strong> 127.0.0.0/8 adalah <strong>loopback</strong> (localhost) – bukan milik class A untuk publik.</p>
+                <button onclick="window.print()">🖨️ Cetak / Simpan sebagai PDF</button>
+                <p style="margin-top: 1rem; font-size: 0.8rem;">Tekan tombol di atas, lalu pilih "Save as PDF" untuk mendapatkan file presentasi.</p>
+            </div>
+        </div>
+    </section>
 
-    function render() {
-        const s = soalList[current];
-        document.getElementById('qIdxDisplay').innerText = current + 1;
-        document.getElementById('questionText').innerText = s.q;
-        document.getElementById('progressFill').style.width = ((current+1)/50)*100 + "%";
-        document.getElementById('optionsContainer').innerHTML = s.opt.map((o, i) => 
-            `<button class="option-btn ${userAnswers[current]===i?'selected':''}" onclick="setA(${i})">${o}</button>`).join('');
-    }
-
-    window.setA = (i) => { userAnswers[current] = i; render(); };
-
-    window.move = (dir) => {
-        if(current + dir >= 0 && current + dir < 50) {
-            current += dir; render();
-        } else if(current + dir === 50) {
-            finish();
-        }
-    };
-
-    function finish() {
-        let score = 0;
-        userAnswers.forEach((ans, i) => { if(ans === soalList[i].a) score++; });
-        let final = (score/50)*100;
-        document.getElementById('mainArea').style.display = 'none';
-        document.getElementById('resultArea').style.display = 'block';
-        document.getElementById('resName').innerText = name;
-        document.getElementById('resScore').innerText = final;
+    <script>
+        // Membuat navigasi dot otomatis
+        const slides = document.querySelectorAll('.slide');
+        const dotsContainer = document.getElementById('navDots');
         
-        let grade = final >= 90 ? "SUPER GENIUS (Level III)" : final >= 75 ? "HIGH INTELLIGENCE" : "AVERAGE";
-        document.getElementById('resGrade').innerText = grade;
-
-        document.getElementById('waBtn').onclick = () => {
-            let msg = `*REX-EYE IQ PRO REPORT*\n\nNama: ${name}\nSkor: ${final}/100\nBenar: ${score} dari 50 soal\nKategori: ${grade}\n\n_Evaluasi ini bersifat valid dan rahasia._`;
-            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
-        };
-        saveHist(final);
-    }
-
-    function startTimer() {
-        setInterval(() => {
-            if(timer > 0) {
-                timer--;
-                let m = Math.floor(timer/60), s = timer%60;
-                document.getElementById('timerDisplay').innerText = `${m}:${s<10?'0'+s:s}`;
-            }
-        }, 1000);
-    }
-
-    function saveHist(s) {
-        let h = JSON.parse(localStorage.getItem('rex_pro_hist') || '[]');
-        h.unshift({s, n: name, d: new Date().toLocaleDateString()});
-        localStorage.setItem('rex_pro_hist', JSON.stringify(h.slice(0,5)));
-        showHist();
-    }
-
-    function showHist() {
-        let h = JSON.parse(localStorage.getItem('rex_pro_hist') || '[]');
-        document.getElementById('historyList').innerHTML = "<b>Riwayat:</b>" + h.map(x => 
-            `<div class="history-item"><span>${x.n} (${x.d})</span><strong>${x.s}</strong></div>`).join('');
-    }
-    showHist();
-</script>
+        function createDots() {
+            slides.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                dot.addEventListener('click', () => {
+                    slides[index].scrollIntoView({ behavior: 'smooth' });
+                });
+                dotsContainer.appendChild(dot);
+            });
+            updateActiveDot();
+        }
+        
+        function updateActiveDot() {
+            const scrollPos = window.scrollY + 200;
+            const dots = document.querySelectorAll('.dot');
+            slides.forEach((slide, idx) => {
+                const top = slide.offsetTop;
+                const bottom = top + slide.offsetHeight;
+                if (scrollPos >= top && scrollPos < bottom) {
+                    dots.forEach(d => d.classList.remove('active'));
+                    if (dots[idx]) dots[idx].classList.add('active');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', updateActiveDot);
+        window.addEventListener('resize', updateActiveDot);
+        createDots();
+    </script>
 </body>
 </html>
